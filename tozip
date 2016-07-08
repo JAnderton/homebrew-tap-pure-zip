@@ -1,0 +1,21 @@
+#!/bin/sh
+
+url=$1
+echo ">> Creating downloads directory"
+mkdir downloads
+
+echo ">> Downloading artifact: $url"
+wget -ndq $url -P downloads/
+
+for f in downloads/*.tar.gz; do \
+  artifactWithPrefix=${f%.tar.gz}
+  artifactWithoutPrefix=${artifactWithPrefix#downloads/}
+
+  mkdir $artifactWithPrefix ;\
+  tar -C downloads -xf $f
+  zip -qr "zips/${artifactWithoutPrefix}.zip" $artifactWithPrefix ;
+  rm -rf $artifactWithPrefix ;\
+done
+
+echo "Destroying downloads directory"
+rm -rf downloads/
