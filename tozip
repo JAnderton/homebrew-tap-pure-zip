@@ -5,17 +5,25 @@ echo ">> Creating downloads directory"
 mkdir downloads
 
 echo ">> Downloading artifact: $url"
-wget -ndq $url -P downloads/
+wget -nd -q $url -P downloads/
 
-for f in downloads/*.tar.gz; do \
+function tarToZip() {
   artifactWithPrefix=${f%.tar.gz}
   artifactWithoutPrefix=${artifactWithPrefix#downloads/}
 
-  mkdir $artifactWithPrefix ;\
+  mkdir $artifactWithPrefix ;
+  echo ">> Untarring $f"
   tar -C downloads -xf $f
-  zip -qr "zips/${artifactWithoutPrefix}.zip" $artifactWithPrefix ;
-  rm -rf $artifactWithPrefix ;\
+  cd downloads
+  echo ">> Zipping $f to zips/${artifactWithoutPrefix}.zip"
+  zip -qr "../zips/${artifactWithoutPrefix}.zip" $artifactWithoutPrefix ;
+  echo ">> Removing $artifactWithPrefix"
+  rm -rf ../$artifactWithPrefix ;
+}
+
+for f in downloads/*.tar.gz; do \
+  tarToZip
 done
 
-echo "Destroying downloads directory"
+echo ">> Destroying downloads directory"
 rm -rf downloads/
