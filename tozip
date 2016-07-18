@@ -1,6 +1,7 @@
 #!/bin/sh
 
 url=$1
+curDir=$(pwd)
 echo ">> Creating downloads directory"
 mkdir downloads
 
@@ -25,5 +26,5 @@ for f in downloads/*.tar.*; do \
   tarToZip
 done
 
-echo ">> Destroying downloads directory"
-rm -rf downloads/
+echo ">> Destroying downloads directory $(pwd)/downloads/"
+rm -rf $curDir/downloads/
