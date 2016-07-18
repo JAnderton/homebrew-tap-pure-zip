@@ -16,9 +16,9 @@ function tarToZip() {
   tar -C downloads -xf $f
   cd downloads
   echo ">> Zipping $f to zips/${artifactWithoutPrefix}.zip"
-  zip -qr "../zips/${artifactWithoutPrefix}.zip" $artifactWithoutPrefix ;
+  zip -qr "../zips/${artifactWithoutPrefix}.zip" $artifactWithoutPrefix
   echo ">> Removing $artifactWithPrefix"
-  rm -rf ../$artifactWithPrefix ;
+  rm -rf ../$artifactWithPrefix
 }
 
 for f in downloads/*.tar.*; do \
