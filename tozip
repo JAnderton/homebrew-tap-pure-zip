@@ -8,10 +8,10 @@ echo ">> Downloading artifact: $url"
 wget -nd -q $url -P downloads/
 
 function tarToZip() {
-  artifactWithPrefix=${f%.tar.gz}
+  artifactWithPrefix=${f%.tar.*}
   artifactWithoutPrefix=${artifactWithPrefix#downloads/}
 
-  mkdir $artifactWithPrefix ;
+  mkdir $artifactWithPrefix
   echo ">> Untarring $f"
   tar -C downloads -xf $f
   cd downloads
@@ -21,7 +21,7 @@ function tarToZip() {
   rm -rf ../$artifactWithPrefix ;
 }
 
-for f in downloads/*.tar.gz; do \
+for f in downloads/*.tar.*; do \
   tarToZip
 done
 
